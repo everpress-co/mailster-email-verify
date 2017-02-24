@@ -12,7 +12,7 @@ Author URI: https://mailster.co
 
 > This Plugin requires [Mailster Newsletter Plugin for WordPress](http://rxa.li/mailster?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster)
 
-Verifies your subscribers email addresses. Read more on the [Mailster Blog](https://mailster.newsletter-plugin.com/reduce-false-signups-with-email-verification/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster&utm_medium=link)
+Verifies your subscribers email addresses. Read more on the [Mailster Knowledge base](https://kb.mailster.co/reduce-false-signups-with-email-verification/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster&utm_medium=link)
 
 == Installation ==
 
