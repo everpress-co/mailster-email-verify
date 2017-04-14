@@ -3,7 +3,7 @@
 Plugin Name: Mailster Email Verify
 Plugin URI: http://rxa.li/mailster?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster
 Description: Verifies your subscribers email addresses
-Version: 1.0
+Version: 1.1
 Author: revaxarts.com
 Author URI: https://mailster.co
 Text Domain: mailster-email-verify
@@ -11,7 +11,7 @@ License: GPLv2 or later
 */
 
 
-define( 'MAILSTER_SEV_VERSION', '1.0' );
+define( 'MAILSTER_SEV_VERSION', '1.1' );
 define( 'MAILSTER_SEV_REQUIRED_VERSION', '2.2' );
 
 class MailsterEmailVerify {
@@ -53,6 +53,8 @@ class MailsterEmailVerify {
 				'sev_dep_error' => __( 'Sorry, your email address is not accepted!', 'mailster-email-verify' ),
 				'sev_domains' => '',
 				'sev_domains_error' => __( 'Sorry, your email address is not accepted!', 'mailster-email-verify' ),
+				'sev_emails' => '',
+				'sev_emails_error' => __( 'Sorry, your email address is not accepted!', 'mailster-email-verify' ),
 			);
 
 			$mailster_options = mailster_options();
@@ -134,26 +136,36 @@ class MailsterEmailVerify {
 
 		list( $user, $domain ) = explode( '@', $email );
 
-		// check for whitelisted
+		// check for email addresses
+		$blacklisted_emails = explode( "\n", mailster_option( 'sev_emails', '' ) );
+		if ( in_array( $email, $blacklisted_emails ) ) {
+			return new WP_Error( 'sev_emails_error', mailster_option( 'sev_emails_error' ), 'email' );
+		}
+
+		// check for white listed
 		$whitelisted_domains = explode( "\n", mailster_option( 'sev_whitelist', '' ) );
 		if ( in_array( $domain, $whitelisted_domains ) ) {
-			return true; }
+			return true;
+		}
 
 		// check for domains
 		$blacklisted_domains = explode( "\n", mailster_option( 'sev_domains', '' ) );
 		if ( in_array( $domain, $blacklisted_domains ) ) {
-			return new WP_Error( 'sev_domains_error', mailster_option( 'sev_domains_error' ), 'email' ); }
+			return new WP_Error( 'sev_domains_error', mailster_option( 'sev_domains_error' ), 'email' );
+		}
 
 		// check DEP
 		if ( $dea_domains = $this->get_dea_domains( false ) ) {
 			if ( in_array( $domain, $dea_domains ) ) {
-				return new WP_Error( 'sev_dep_error', mailster_option( 'sev_dep_error' ), 'email' ); }
+				return new WP_Error( 'sev_dep_error', mailster_option( 'sev_dep_error' ), 'email' );
+			}
 		}
 
 		// check MX record
 		if ( mailster_option( 'sev_check_mx' ) && function_exists( 'checkdnsrr' ) ) {
 			if ( ! checkdnsrr( $domain, 'MX' ) ) {
-				return new WP_Error( 'sev_check_error', mailster_option( 'sev_check_error' ), 'email' ); }
+				return new WP_Error( 'sev_check_error', mailster_option( 'sev_check_error' ), 'email' );
+			}
 		}
 
 		// check via SMTP server
@@ -168,7 +180,8 @@ class MailsterEmailVerify {
 			$valid = ! ! array_sum( $smtp_results['domains'][ $domain ]['mxs'] );
 
 			if ( ! $valid ) {
-				return new WP_Error( 'sev_check_error', mailster_option( 'sev_check_error' ), 'email' ); }
+				return new WP_Error( 'sev_check_error', mailster_option( 'sev_check_error' ), 'email' );
+			}
 		}
 
 		return true;
@@ -237,6 +250,15 @@ class MailsterEmailVerify {
 			<p><label><input type="hidden" name="mailster_options[sev_dep]" value=""><input type="checkbox" name="mailster_options[sev_dep]" value="1" <?php checked( mailster_option( 'sev_dep' ) ); ?>><?php _e( 'reject email addresses from disposable email providers (DEP).', 'mailster' );?></label></p>
 			<p><strong><?php _e( 'Error Message' , 'mailster-email-verify' ) ?>:</strong>
 			<input type="text" name="mailster_options[sev_dep_error]" value="<?php echo esc_attr( mailster_option( 'sev_dep_error' ) ) ?>" class="large-text"></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<th scope="row"><?php _e( 'Blacklisted Email Addresses' , 'mailster-email-verify' ) ?></th>
+			<td>
+			<p><?php _e( 'List of blacklisted email addresses. One email each line.' , 'mailster-email-verify' ) ?><br>
+			<textarea name="mailster_options[sev_emails]" placeholder="<?php echo "john@blacklisted.com\njane@blacklisted.co.uk\nhans@blacklisted.de"?>" class="code large-text" rows="10"><?php echo esc_attr( mailster_option( 'sev_emails' ) ) ?></textarea></p>
+			<p><strong><?php _e( 'Error Message' , 'mailster-email-verify' ) ?>:</strong>
+			<input type="text" name="mailster_options[sev_emails_error]" value="<?php echo esc_attr( mailster_option( 'sev_emails_error' ) ) ?>" class="large-text"></p>
 			</td>
 		</tr>
 		<tr valign="top">
