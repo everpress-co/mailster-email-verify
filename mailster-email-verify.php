@@ -3,7 +3,7 @@
 Plugin Name: Mailster Email Verify
 Plugin URI: http://rxa.li/mailster?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster
 Description: Verifies your subscribers email addresses
-Version: 1.1
+Version: 1.2
 Author: revaxarts.com
 Author URI: https://mailster.co
 Text Domain: mailster-email-verify
@@ -11,7 +11,7 @@ License: GPLv2 or later
 */
 
 
-define( 'MAILSTER_SEV_VERSION', '1.1' );
+define( 'MAILSTER_SEV_VERSION', '1.2' );
 define( 'MAILSTER_SEV_REQUIRED_VERSION', '2.2' );
 
 class MailsterEmailVerify {
@@ -164,7 +164,7 @@ class MailsterEmailVerify {
 		// check MX record
 		if ( mailster_option( 'sev_check_mx' ) && function_exists( 'checkdnsrr' ) ) {
 			if ( ! checkdnsrr( $domain, 'MX' ) ) {
-				return new WP_Error( 'sev_check_error', mailster_option( 'sev_check_error' ), 'email' );
+				return new WP_Error( 'sev_mx_error', mailster_option( 'sev_check_error' ), 'email' );
 			}
 		}
 
@@ -177,10 +177,11 @@ class MailsterEmailVerify {
 
 			$validator = new SMTP_Validate_Email( $email, $from );
 			$smtp_results = $validator->validate();
-			$valid = ! ! array_sum( $smtp_results['domains'][ $domain ]['mxs'] );
+			// $valid = ! ! array_sum( $smtp_results['domains'][ $domain ]['mxs'] );
+			$valid = isset( $smtp_results[ $email ] ) && 1 == $smtp_results[ $email ];
 
 			if ( ! $valid ) {
-				return new WP_Error( 'sev_check_error', mailster_option( 'sev_check_error' ), 'email' );
+				return new WP_Error( 'sev_smtp_error', mailster_option( 'sev_check_error' ), 'email' );
 			}
 		}
 

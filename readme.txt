@@ -2,8 +2,8 @@
 Contributors: everpress, revaxarts
 Tags: mailster, newsletter, email, verification
 Requires at least: 3.8
-Tested up to: 4.7.3
-Stable tag: 1.1
+Tested up to: 4.7.5
+Stable tag: 1.2
 License: GPLv2 or later
 Author: revaxarts
 Author URI: https://mailster.co
@@ -23,6 +23,10 @@ Verifies your subscribers email addresses. Read more on the [Mailster Knowledge 
 1. Option Interface.
 
 == Changelog ==
+
+= 1.2 =
+* improved SMTP check
+* updated Disposable Email List
 
 = 1.1 =
 * added option to blacklist email addresses
