@@ -3,7 +3,7 @@
 Plugin Name: Mailster Email Verify
 Plugin URI: http://rxa.li/mailster?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster
 Description: Verifies your subscribers email addresses
-Version: 1.2
+Version: 1.2.1
 Author: revaxarts.com
 Author URI: https://mailster.co
 Text Domain: mailster-email-verify
@@ -11,7 +11,7 @@ License: GPLv2 or later
 */
 
 
-define( 'MAILSTER_SEV_VERSION', '1.2' );
+define( 'MAILSTER_SEV_VERSION', '1.2.1' );
 define( 'MAILSTER_SEV_REQUIRED_VERSION', '2.2' );
 
 class MailsterEmailVerify {
@@ -177,9 +177,7 @@ class MailsterEmailVerify {
 
 			$validator = new SMTP_Validate_Email( $email, $from );
 			$smtp_results = $validator->validate();
-			// $valid = ! ! array_sum( $smtp_results['domains'][ $domain ]['mxs'] );
-			$valid = isset( $smtp_results[ $email ] ) && 1 == $smtp_results[ $email ];
-
+			$valid = (isset( $smtp_results[ $email ] ) && 1 == $smtp_results[ $email ]) || ! ! array_sum( $smtp_results['domains'][ $domain ]['mxs'] );
 			if ( ! $valid ) {
 				return new WP_Error( 'sev_smtp_error', mailster_option( 'sev_check_error' ), 'email' );
 			}
