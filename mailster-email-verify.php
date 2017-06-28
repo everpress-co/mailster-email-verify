@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Mailster Email Verify
-Plugin URI: http://rxa.li/mailster?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster
+Plugin URI: https://mailster.co/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster
 Description: Verifies your subscribers email addresses
 Version: 1.2.1
-Author: revaxarts.com
+Author: EverPress
 Author URI: https://mailster.co
 Text Domain: mailster-email-verify
 License: GPLv2 or later
@@ -321,7 +321,7 @@ class MailsterEmailVerify {
 ?>
 	<div id="message" class="error">
 	  <p>
-	   <strong>Email Verify for Mailster</strong> requires the <a href="http://rxa.li/mailster?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster">Mailster Newsletter Plugin</a>, at least version <strong><?php echo MAILSTER_SEV_REQUIRED_VERSION ?></strong>. Plugin deactivated.
+	   <strong>Email Verify for Mailster</strong> requires the <a href="https://mailster.co/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster">Mailster Newsletter Plugin</a>, at least version <strong><?php echo MAILSTER_SEV_REQUIRED_VERSION ?></strong>. Plugin deactivated.
 	  </p>
 	</div>
 		<?php

@@ -5,7 +5,7 @@ Requires at least: 3.8
 Tested up to: 4.8
 Stable tag: 1.2.1
 License: GPLv2 or later
-Author: revaxarts
+Author: EverPress
 Author URI: https://mailster.co
 
 == Description ==
@@ -39,5 +39,5 @@ Verifies your subscribers email addresses. Read more on the [Mailster Knowledge 
 
 == Additional Info One ==
 
-> This Plugin requires [Mailster Newsletter Plugin for WordPress](http://rxa.li/mailster?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster)
+> This Plugin requires [Mailster Newsletter Plugin for WordPress](https://mailster.co/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster)
 
