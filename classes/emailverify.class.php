@@ -94,6 +94,10 @@ class MailsterEmailVerify {
 	 */
 	public function verify_subscriber( $entry ) {
 
+		if ( is_wp_error( $entry ) ) {
+			return $entry;
+		}
+
 		if ( ! isset( $entry['email'] ) ) {
 			return $entry;
 		}
