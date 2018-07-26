@@ -35,7 +35,7 @@ class MailsterEmailVerify {
 				'sev_check_mx' => true,
 				'sev_check_smtp' => false,
 				'sev_check_error' => __( 'Sorry, your email address is not accepted!', 'mailster-email-verify' ),
-				'sev_dep' => false,
+				'sev_dep' => true,
 				'sev_dep_error' => __( 'Sorry, your email address is not accepted!', 'mailster-email-verify' ),
 				'sev_domains' => '',
 				'sev_domains_error' => __( 'Sorry, your email address is not accepted!', 'mailster-email-verify' ),

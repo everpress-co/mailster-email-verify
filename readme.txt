@@ -2,8 +2,8 @@
 Contributors: everpress, revaxarts
 Tags: mailster, newsletter, email, verification
 Requires at least: 3.8
-Tested up to: 4.8
-Stable tag: 1.3.1
+Tested up to: 4.9
+Stable tag: 1.4
 License: GPLv2 or later
 Author: EverPress
 Author URI: https://mailster.co
@@ -23,6 +23,9 @@ Verifies your subscribers email addresses. Read more on the [Mailster Knowledge 
 1. Option Interface.
 
 == Changelog ==
+
+= 1.4 =
+* updated third party class to support PHP 7.2
 
 = 1.3.1 =
 * fixes: error if verification object is WP_Error

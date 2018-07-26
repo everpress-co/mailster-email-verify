@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @version 0.6
+ * @version 0.7
  * @todo
  *   - finish the graylisting thingy
  *   - perhaps re-implement some methods as static?
@@ -99,6 +99,13 @@ class SMTP_Validate_Email {
 	 * value appropriately.
 	 */
 	public $no_comm_is_valid = false;
+
+	/**
+	 * Being unable to connect with the remote host could mean a server
+	 * configuration issue, but it might not, depending on your use case,
+	 * set the value appropriately.
+	 */
+	public $no_conn_is_valid = false;
 
 	// do we consider "greylisted" responses as valid or invalid addresses
 	public $greylisted_considered_valid = true;
@@ -260,8 +267,8 @@ class SMTP_Validate_Email {
 			$this->domains_info[ $domain ]['users'] = $users;
 			$this->domains_info[ $domain ]['mxs'] = $mxs;
 
-			// try each host
-			while ( list($host) = each( $mxs ) ) {
+			// try each host, $_weight unused in the foreach body, but array_keys() doesn't guarantee the order
+			foreach ( $mxs as $host => $_weight ) {
 				// try connecting to the remote host
 				try {
 					$this->connect( $host );
@@ -271,7 +278,7 @@ class SMTP_Validate_Email {
 				} catch (SMTP_Validate_Email_Exception_No_Connection $e) {
 					// unable to connect to host, so these addresses are invalid?
 					$this->debug( 'Unable to connect. Exception caught: ' . $e->getMessage() );
-					$this->set_domain_results( $users, $domain, false );
+					$this->set_domain_results( $users, $domain, $this->no_conn_is_valid );
 				}
 			}
 
@@ -453,12 +460,12 @@ class SMTP_Validate_Email {
 	 * Sends a HELO/EHLO sequence
 	 *
 	 * @todo Implement TLS
-	 * @return bool  True if successful, false otherwise
+	 * @return bool|null  True if successful, false otherwise
 	 */
 	protected function helo() {
 		// don't try if it was already done
 		if ( $this->state['helo'] ) {
-			return;
+			return null;
 		}
 		try {
 			$this->expect( self::SMTP_CONNECT_SUCCESS, $this->command_timeouts['helo'] );
@@ -654,7 +661,7 @@ class SMTP_Validate_Email {
 	 * @param int $timeout Timeout in seconds
 	 * @return string
 	 * @throws SMTP_Validate_Email_Exception_No_Connection
-	 * @throws SMTP_Validate_Email_Exception_Socket_Timeout
+	 * @throws SMTP_Validate_Email_Exception_Timeout
 	 * @throws SMTP_Validate_Email_Exception_No_Response
 	 */
 	protected function recv( $timeout = null ) {
@@ -683,9 +690,9 @@ class SMTP_Validate_Email {
 	/**
 	 * Receives lines from the remote host and looks for expected response codes.
 	 *
-	 * @param array $codes A list of one or more expected response codes
-	 * @param int   $timeout The timeout for this individual command, if any
-	 * @param bool  $empty_response_allowed When true, empty responses are not allowed
+	 * @param int|int[] $codes A list of one or more expected response codes
+	 * @param int       $timeout The timeout for this individual command, if any
+	 * @param bool      $empty_response_allowed When true, empty responses are allowed
 	 * @return string The last text message received
 	 * @throws SMTP_Validate_Email_Exception_Unexpected_Response
 	 */
@@ -786,6 +793,10 @@ class SMTP_Validate_Email {
 	 * Params and behaviour is that of the regular getmxrr function.
 	 *
 	 * @see  http://www.php.net/getmxrr
+	 * @param string   $hostname
+	 * @param string[] $mxhosts
+	 * @param int[]    $mxweights
+	 * @return bool|null
 	 */
 	protected function getmxrr( $hostname, &$mxhosts, &$mxweights ) {
 		if ( ! is_array( $mxhosts ) ) {
@@ -795,7 +806,7 @@ class SMTP_Validate_Email {
 			$mxweights = array();
 		}
 		if ( empty( $hostname ) ) {
-			return;
+			return null;
 		}
 		$cmd = 'nslookup -type=MX ' . escapeshellarg( $hostname );
 		if ( ! empty( $this->mx_query_ns ) ) {
@@ -803,7 +814,7 @@ class SMTP_Validate_Email {
 		}
 		exec( $cmd, $output );
 		if ( empty( $output ) ) {
-			return;
+			return null;
 		}
 		$i = -1;
 		foreach ( $output as $line ) {
@@ -828,6 +839,7 @@ class SMTP_Validate_Email {
 	 * @return void
 	 */
 	private function debug( $str ) {
+		$str = $this->stamp( $str );
 		$this->log( $str );
 		if ( $this->debug == true ) {
 			if ( PHP_SAPI != 'cli' ) {
@@ -844,6 +856,20 @@ class SMTP_Validate_Email {
 	 */
 	private function log( $msg ) {
 		$this->log[] = $msg;
+	}
+
+	/**
+	 * Prepends the given $msg with the current date and time inside square brackets.
+	 *
+	 * @param string $msg
+	 *
+	 * @return string
+	 */
+	private function stamp( $msg ) {
+		$date = \DateTime::createFromFormat( 'U.u', sprintf( '%.f', microtime( true ) ) )->format( 'Y-m-d\TH:i:s.uO' );
+		$line = '[' . $date . '] ' . $msg;
+
+		return $line;
 	}
 
 	/**
