@@ -2,7 +2,7 @@
 Contributors: everpress, revaxarts
 Tags: mailster, newsletter, email, verification
 Requires at least: 3.8
-Tested up to: 4.9
+Tested up to: 5.0
 Stable tag: 1.4
 License: GPLv2 or later
 Author: EverPress
