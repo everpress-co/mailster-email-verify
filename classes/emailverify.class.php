@@ -260,7 +260,7 @@ class MailsterEmailVerify {
 		?>
 	<div id="message" class="error">
 	  <p>
-	   <strong>Email Verify for Mailster</strong> requires the <a href="https://mailster.co/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster">Mailster Newsletter Plugin</a>, at least version <strong><?php echo MAILSTER_EMAILVERIFY_REQUIRED_VERSION; ?></strong>. Plugin deactivated.
+	   <strong>Email Verify for Mailster</strong> requires the <a href="https://mailster.co/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster&utm_medium=plugin">Mailster Newsletter Plugin</a>, at least version <strong><?php echo MAILSTER_EMAILVERIFY_REQUIRED_VERSION; ?></strong>. Plugin deactivated.
 	  </p>
 	</div>
 		<?php
