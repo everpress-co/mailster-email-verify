@@ -133,19 +133,19 @@ class MailsterEmailVerify {
 		list( $user, $domain ) = explode( '@', $email );
 
 		// check for email addresses
-		$blacklisted_emails = explode( "\n", mailster_option( 'sev_emails', '' ) );
+		$blacklisted_emails = $this->textarea_to_array( mailster_option( 'sev_emails', '' ) );
 		if ( in_array( $email, $blacklisted_emails ) ) {
 			return new WP_Error( 'sev_emails_error', mailster_option( 'sev_emails_error' ), 'email' );
 		}
 
 		// check for white listed
-		$whitelisted_domains = explode( "\n", mailster_option( 'sev_whitelist', '' ) );
+		$whitelisted_domains = $this->textarea_to_array( mailster_option( 'sev_whitelist', '' ) );
 		if ( in_array( $domain, $whitelisted_domains ) ) {
 			return true;
 		}
 
 		// check for domains
-		$blacklisted_domains = explode( "\n", mailster_option( 'sev_domains', '' ) );
+		$blacklisted_domains = $this->textarea_to_array( mailster_option( 'sev_domains', '' ) );
 		if ( in_array( $domain, $blacklisted_domains ) ) {
 			return new WP_Error( 'sev_domains_error', mailster_option( 'sev_domains_error' ), 'email' );
 		}
@@ -181,6 +181,12 @@ class MailsterEmailVerify {
 
 		return true;
 
+	}
+
+
+	private function textarea_to_array( $value ) {
+
+		return array_map( 'trim', explode( "\n", $value ) );
 	}
 
 
