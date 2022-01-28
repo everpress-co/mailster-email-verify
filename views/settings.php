@@ -23,7 +23,6 @@
 		<p><?php esc_html_e( 'List of blacklisted email addresses. One email each line.', 'mailster-email-verify' ); ?><br>
 		<textarea name="mailster_options[sev_emails]" placeholder="<?php echo "john@blacklisted.com\njane@blacklisted.co.uk\nhans@blacklisted.de"; ?>" class="code large-text" rows="10"><?php echo esc_attr( mailster_option( 'sev_emails' ) ); ?></textarea></p>
 		<p><strong><?php esc_html_e( 'Error Message', 'mailster-email-verify' ); ?>:</strong>
-		<input type="text" name="mailster_options[sev_emails_error]" value="<?php echo esc_attr( mailster_option( 'sev_emails_error' ) ); ?>" class="large-text"></p>
 		</td>
 	</tr>
 	<tr valign="top">
