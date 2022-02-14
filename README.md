@@ -21,7 +21,10 @@ This plugin is no longer needed since Mailster 3.0!
 
 ## Screenshots
 
-1. Option Interface.
+### 1. Option Interface.
+
+![Option Interface.](https://ps.w.org/mailster-email-verify/assets/screenshot-1.png)
+
 
 ## Changelog
 
