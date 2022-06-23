@@ -3,7 +3,7 @@
 Contributors: everpress  
 Tags: mailster, newsletter, email, verification  
 Requires at least: 3.8  
-Tested up to: 5.9  
+Tested up to: 6.0  
 Stable tag: 1.6  
 License: GPLv2 or later
 
@@ -24,7 +24,6 @@ This plugin is no longer needed since Mailster 3.0!
 ### 1. Option Interface.
 
 ![Option Interface.](https://ps.w.org/mailster-email-verify/assets/screenshot-1.png)
-
 
 ## Changelog
 
