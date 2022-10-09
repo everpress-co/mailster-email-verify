@@ -1,6 +1,6 @@
 # Mailster Email Verify
 
-Contributors: everpress  
+Contributors: everpress, xaverb  
 Tags: mailster, newsletter, email, verification  
 Requires at least: 3.8  
 Tested up to: 6.0  
@@ -9,7 +9,7 @@ License: GPLv2 or later
 
 ## Description
 
-Verifies your subscribers email addresses. Read more on the [Mailster Knowledge base](https://kb.mailster.co/reduce-false-signups-with-email-verification/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster&utm_medium=readme)
+Verifies your subscribers email addresses. Read more on the [Mailster Knowledge base](https://kb.mailster.co/reduce-false-signups-with-email-verification/?utm_campaign=wporg&utm_source=Email+Verify&utm_medium=readme)
 
 This plugin is no longer needed since Mailster 3.0!
 
@@ -68,4 +68,4 @@ This plugin is no longer needed since Mailster 3.0!
 
 ## Additional Info
 
-> This Plugin requires [Mailster Newsletter Plugin for WordPress](https://mailster.co/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster&utm_medium=readme)
+> This Plugin requires [Mailster Newsletter Plugin for WordPress](https://mailster.co/?utm_campaign=wporg&utm_source=wordpress.org&utm_medium=readme&utm_term=Email+Verify)

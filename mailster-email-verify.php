@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Mailster Email Verify
-Plugin URI: https://mailster.co/?utm_campaign=wporg&utm_source=Email+Verify+for+Mailster&utm_medium=plugin
+Plugin URI: https://mailster.co/?utm_campaign=wporg&utm_source=wordpress.org&utm_medium=plugin&utm_term=Email+Verify
 Description: Verifies your subscribers email addresses
 Version: 1.6
 Author: EverPress
