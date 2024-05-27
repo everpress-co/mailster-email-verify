@@ -1,8 +1,8 @@
 # Mailster Email Verify
 
-Contributors: everpress, xaverb  
+Contributors: everpress, mailster, xaverb  
 Tags: mailster, newsletter, email, verification  
-Requires at least: 3.8  
+Requires at least: 6.0  
 Tested up to: 6.5  
 Stable tag: 1.6.0  
 License: GPLv2 or later
@@ -27,7 +27,7 @@ This plugin is no longer needed since Mailster 3.0!
 
 ## Changelog
 
-### 1.6
+### 1.6.0
 
 - added: abandoned message for Mailster 3.0 users
 
